@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<h2>Create Customer</h2>
+
+<div id="content" ng-app="customerForm" ng-controller="CustomerController">
+    <form name="frmCustomer" novalidate>
+        <div >
+            <input type="hidden" ng-model="custModel.Id" name="cid" />
+        </div>
+
+        <div class="form-row">
+            <label for="email">Email </label>
+            <input type="email" class="form-control" ng-model="custModel.Email" name="email" placeholder="Please enter email" required />
+            <span class="error" ng-show="(frmCustomer.$dirty ||submitted) && frmCustomer.email.$error.required">Email Id is Required!</span>
+            <span class="error" ng-show="(frmCustomer.$dirty ||submitted) && frmCustomer.$error.email">Invalid Email Id!</span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">First name :</label>
+            <input type="text" class="form-control" ng-model="custModel.FirstName" name="fname" placeholder="Please enter first name" required ng-minlength="2" ng-maxlength="14" />
+            <span class="error" ng-show="(frmCustomer.$dirty||submitted) && frmCustomer.fname.$error.required">first name is Required</span>
+            <span class="error" ng-show="frmCustomer.$dirty && frmCustomer.fname.$error.minlength">Minimum length required is 2</span>
+            <span class="error" ng-show="frmCustomer.$dirty && frmCustomer.fname.$error.maxlength">Minimum length required is 15</span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Last name :</label>
+            <input type="text" class="form-control" ng-model="custModel.LastName" name="lname" placeholder="Please enter last name" required ng-minlength="4" ng-maxlength="14" />
+            <span class="error" ng-show="(frmCustomer.$dirty||submitted) && frmCustomer.lname.$error.required">last name is Required</span>
+            <span class="error" ng-show="frmCustomer.$dirty && frmCustomer.lname.$error.minlength">Minimum length required is 5</span>
+            <span class="error" ng-show="frmCustomer.$dirty && frmCustomer.lname.$error.maxlength">Minimum length required is 15</span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Gender :</label>
+            <input type="radio" class="form-check-input" name="userGender" id="rdb-male" ng-model='custModel.Gender' value="Male" />
+            <label for="rdb-male">Male</label>
+            <input type="radio" class="form-check-input" name="userGender" id="rdb-female" ng-model='custModel.Gender' value="Female" />
+            <label for="rdb-female">Female</label>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Phone :</label>
+            <input type="text" class="form-control" ng-model="custModel.Phone" name="phone" placeholder="Please enter phone" required ng-minlength="10" ng-maxlength="10" only-digits />
+            <span class="error" ng-show="(frmCustomer.$dirty||submitted) && frmCustomer.phone.$error.required">Phone is Required</span>
+            <span class="error" ng-show="frmCustomer.$dirty && frmCustomer.phone.$error.minlength">Minimum length required is 10</span>
+            <span class="error" ng-show="frmCustomer.$dirty && frmCustomer.phone.$error.maxlength">Maximum length required is 10</span>
+        </div>
+
+        <div class ="form-group">
+            <label for="email">D.O.B :</label>
+            <input type="date" class="form-control" ng-model="custModel.DOB" name="cdob">
+            <span class="error" ng-show="(frmCustomer.$dirty||submitted) && frmCustomer.cdob.$error.required">D.O.B name is Required</span>
+        </div>
+
+        <div class="form-group">
+            <label>Upload file</label>
+            <input type="file" class="form-control" multiple="multiple" ngf-select="UploadFiles($files)" />
+            <div id="dvProgress" class="progress" ng-show="Progress >= 0"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Password : </label>
+            <input type="password" class="form-control" ng-model="custModel.Password" name="password" placeholder="Please enter password" required ng-minlength="5" />
+            <span class="error" ng-show="(frmCustomer.$dirty||submitted) && frmCustomer.password.$error.required">Password name is Required</span>
+            <span class="error" ng-show="frmCustomer.$dirty && frmCustomer.password.$error.minlength">Minimum length required is 5</span>
+        </div>
+
+        <span ng-show="isViewLoading" class="viewLoading">
+            <img src="~/content/images/ng-loader.gif" />loading...
+        </span>
+
+        <div ng-class="result">{{message}}</div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="submit" value="Save" ng-click="saveCustomer()" ng-disabled="frmCustomer.$invalid">
+            </div>
+        </div>
+
+    </form>
+    <hr />
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in listCustomer">
+                <td>{{item.fullname}}</td>
+                <td>
+                    <a href="#" ng-click="getCustomer(item)" title="Edit Record">
+                        <img src="~/content/images/edit.png" />
+                    </a><a href="#" ng-click="deleteCustomer(item)" title="Delete Record">
+                        <img src="~/content/images/erase.png" />
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>Employee List</h1>
+
+<body id="customerngapp" ng-app="customerForm" ng-controller="CustomerController">
+    <div style="background-color:#2A3132;width:100%;padding:1px;">
+        <center><h2 style="color:white">All Customers</h2></center>
+    </div>
+    <div class="parent">
+        <br /><br />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in listCustomer">
+                    <td>{{item.email}}</td>
+                    <td>{{item.fullname}}</td>
+                    <td>{{item.gender}}</td>
+                    <td>{{item.phone}}</td>
+                    <td><a href="/api/downloadfile?id={{item.fileId}}">Download</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+<script src="~/angular_js/CustomerController.js"></script>
+
+
+<script>
+    let connection = new signalR.HubConnectionBuilder()
+        .withUrl('/signalrhub')
+        .build();
+    //Start connection
+    connection.start()
+    // Create a function that the hub can call to broadcast messages.
+    connection.on('recived_response', function () {
+        debugger;
+        angular.element(document.getElementById('customerngapp')).scope().getAllCustomer();
+    });
+</script>

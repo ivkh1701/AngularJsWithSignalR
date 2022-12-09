@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "ng-intl-tel-input": "^2.0.0"
+  }
+}
